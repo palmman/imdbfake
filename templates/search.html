@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+<div class="container">
+    <div class="columns">
+            {% for m in movie %}
+            <div class="column is-3 mt-5">
+                <div class="card">
+                    <div class="card-image">
+                    <figure class="image is-4by3">
+                        <a href="{% url 'detail' m.slug %}"><img src="{{m.image.url}}"></a></a>
+                    </figure>
+                    </div>
+                    <div class="card-content">
+                        <a href="{% url 'detail' m.slug %}"><h2>{{m.name}}</h2></a>
+                    <div class="content">
+                        <p>{{m.des|slice:'80'}}</p>
+                        <time datetime="2016-1-1">{{m.created}}</time>
+                    </div>
+                    <h4>Director:</h4>
+                    {% for dec in m.director.all %}
+                    <a href="{% url 'director' dec.slug %}"><span class="tag is-dark">{{dec.name}}</span></a>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
+</div>
+<br>
+<div class="container">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        {% if movie.has_other_pages %}
+            {% if movie.has_previous %}
+            <a href="?page={{ movie.previous_page_number }}" class="pagination-previous">Previous</a>
+            {% endif %}
+            {% if movie.has_next %}
+            <a href="?page={{ movie.paginator.num_pages }}" class="pagination-next">Next page</a>
+            {% endif %}
+            <ul class="pagination-list">
+            {% for i in movie.paginator.page_range %}
+                {% if products.number == i %}
+                    <li><a href="?page={{i}}" class="pagination-link is-current">{{i}}</a></li>
+                {% else %}
+                    <li><a href="?page={{i}}" class="pagination-link">{{i}}</a></li>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </nav>
+</div>
+    
+{% endblock content %}
+
+
+    

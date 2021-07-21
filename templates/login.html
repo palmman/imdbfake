@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+
+<div class="columns is-mobile mt-5">
+    <div class="column is-4 is-offset-4">
+        <h2>Login Pages</h2>
+        <br>
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
+            <div class="field">
+                <p class="control has-icons-left has-icons-right">
+                <input class="input" type="text" placeholder="Username" name="username">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-envelope"></i>
+                </span>
+                <span class="icon is-small is-right">
+                    <i class="fas fa-check"></i>
+                </span>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control has-icons-left">
+                <input class="input" type="password" placeholder="Password" name="password">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                </span>
+                </p>
+            </div>
+            <div class="field">
+                <p class="control">
+                <button type="submit" class="button is-success">
+                    Login
+                </button>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+    
+{% endblock content %}
+
+
+    

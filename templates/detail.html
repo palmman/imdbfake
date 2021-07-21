@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+<div class="columns is-mobile mt-5">
+  <div class="column is-8 is-offset-2">
+    <div class="card">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <img src="{{movie_detail.image.url}}" alt="Placeholder image">
+        </figure>
+      </div>
+      <div class="card-content">
+        <div class="content">
+          <h3>{{movie_detail.name}}</h3>
+          {{movie_detail.des}}
+        </div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <div class="column is-8 is-offset-2">
+      {% if comment.user == comment.user.profile %}
+      <p>You have already submitted your review for this project</p>
+      {% elif request.user.is_authenticated %}
+      <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <br>
+        <p class="control">
+          <button type="submit" class="button is-primary">
+            Submit
+          </button>
+        </p>
+
+      </form>
+      {% else %}
+      <a href="{% url 'login' %}?next={{request.path}}">Please login to leave a review</a>
+      {% endif %}
+    </div>
+    
+    <div class="column is-8 is-offset-2">
+      {% for i in comment %}
+      <article class="message is-small">
+       
+        <div class="message-header">
+          <p>{{i.name}}</p>
+          <button class="delete is-small" aria-label="delete"></button>
+        </div>
+        <div class="message-body">
+          {{i.body}}
+        </div>
+        
+      </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}

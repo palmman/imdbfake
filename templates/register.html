@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% include 'includes/navbar.html' %}
+
+
+<div class="columns is-mobile mt-5">
+    <div class="column is-4 is-offset-4">
+        <h2>Register</h2>
+        <br>
+        <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+          {% for field in form %}
+          <div class="field">
+              <label class="label">{{field.label}}</label>
+              {{field}}
+              {% for error in field.errors %}
+                <p style="color: red;">{{error}}</p>
+              {% endfor %}
+          </div>
+          {% endfor %}
+          <button type="submit" class="button is-success">
+            Register
+          </button>
+        </form>
+    </div>
+</div>
+
+    
+{% endblock content %}
+
+
+    
